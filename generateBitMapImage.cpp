@@ -35,12 +35,12 @@ void generateBitmap(int width, int height) {
     BITMAPINFOHEADER bih;
 
     /* Magic number for file. It does not fit in the header structure due to alignment requirements, so put it outside */
-    unsigned short bfType=0x4d42;
+    unsigned short Type=0x4d42;
 
     /*write bitmap file header*/
     bfh.Reserved1 = 0;
     bfh.Reserved2 = 0;
-    bfh.Size = sizeof(struct BITMAPFILEHEADER) + sizeof(struct BITMAPINFOHEADER) + (bytesPerPixel*width + paddingSize)*height;
+    bfh.Size = sizeof(Type) + sizeof(struct BITMAPFILEHEADER) + sizeof(struct BITMAPINFOHEADER) + (bytesPerPixel*width + paddingSize)*height;
     bfh.OffBits = 0x36;
 
     /*write bitmap info header*/
@@ -64,7 +64,7 @@ void generateBitmap(int width, int height) {
     }
 
     /*Write headers to file*/
-    fwrite(&bfType,1,sizeof(bfType),file);
+    fwrite(&Type,1,sizeof(Type),file);
     fwrite(&bfh, 1, sizeof(bfh), file);
     fwrite(&bih, 1, sizeof(bih), file);
 
